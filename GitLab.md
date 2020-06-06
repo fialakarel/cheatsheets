@@ -12,7 +12,7 @@ kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print $NF}'
 kubectl get secret $(kubectl get secrets | grep -o "default-token-.[a-z0-9]*") -o jsonpath="{['data']['ca\.crt']}" | base64 --decode
 ```
 
-3. Create service account for you GitLab.
+3. Create a service account for your GitLab.
 
 ```bash
 cat <<EOF | kubectl apply -f -
@@ -48,7 +48,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 
 If you need to pull Docker image from a private Docker registry you need to instruct your Kubernetes cluster on how to do that and provide the proper credentials.
 
-There are two options of granting permissions `cluster-wide` and `per-deployment`.
+There are two options of granting permissions -- `cluster-wide` and `per-deployment`.
 
 * The first step is to create the Kubernetes secret with your credentials/tokens.
 
@@ -63,7 +63,7 @@ kubectl create secret \
 
 The `docker-password` can be your real GitLab password or your **personal access token (preferred)** with `read_registry` scope.
 
-### cluster-wide
+### cluster-wide access
 
 You need to "patch" your service account to pass your credentials into each deployment.
 
@@ -71,7 +71,7 @@ You need to "patch" your service account to pass your credentials into each depl
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gitlabdockersecret"}]}'
 ```
 
-### per-deployment
+### per-deployment access
 
 You just need to add `imagePullSecrets` into your deployment.
 
