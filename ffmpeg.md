@@ -25,3 +25,31 @@ ffmpeg \
   -c:a copy \
   output.mp4
 ```
+
+## Add subtitles into video as an optional track
+
+This solution adds the subtitles to the video as a separate optional (and user-controlled) subtitle track.
+
+```bash
+ffmpeg -i infile.mp4 -i infile.srt -c:v copy -c:a copy -c:s mov_text outfile.mp4
+```
+
+Source: https://stackoverflow.com/a/17584272
+
+## Burns subtitles into the video
+
+This solution "burns the subtitles" into the video, so that every viewer of the video will be forced to see them.
+
+* First convert the subtitles to .ass format:
+
+```bash
+ffmpeg -i subtitles.srt subtitles.ass
+```
+
+* Then add them using a video filter:
+
+```bash
+ffmpeg -i mymovie.mp4 -vf ass=subtitles.ass mysubtitledmovie.mp4
+```
+
+Source: https://stackoverflow.com/a/13125122
