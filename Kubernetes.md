@@ -1,5 +1,11 @@
 # Kubernetes
 
+## Install k3s
+
+```bash
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb --kubelet-arg max-pods=1024" sh -
+```
+
 ## Helm
 
 ### Deploy nginx ingress controller
