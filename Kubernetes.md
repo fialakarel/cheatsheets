@@ -2,8 +2,16 @@
 
 ## Install k3s
 
+### Master
+
 ```bash
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb --kubelet-arg max-pods=1024" sh -
+```
+
+### Worker
+
+```bash
+curl -sfL https://get.k3s.io | K3S_URL=https://$IP:6443 K3S_TOKEN=$TOKEN INSTALL_K3S_EXEC="--kubelet-arg max-pods=1024" sh -
 ```
 
 ## Helm
