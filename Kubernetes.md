@@ -277,3 +277,33 @@ spec:
 ```bash
 kubectl create job --from=cronjob/cjname cjname-manual-1
 ```
+
+## Job example
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-list
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello-list
+        image: alpine
+        command: ["ls",  "-lah", "/data"]
+        resources:
+          requests:
+            cpu: "1"
+          limits:
+            cpu: "2"
+        volumeMounts:
+        - mountPath: /data
+          name: test-volume
+      restartPolicy: Never
+      volumes:
+      - name: test-volume
+        hostPath:
+          path: /mnt/server
+          type: Directory
+```
